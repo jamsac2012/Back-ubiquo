@@ -1,0 +1,11 @@
+{
+  "name": "ubiquo-backend",
+  "version": "1.0.0",
+  "description": "API REST para metodos de comunicacion con GCM de Google para Aplicacion Android",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adrian Ayala Castrillon <joseadrian15@gmail.com>",
+  "license": "MIT"
+}
