@@ -18,8 +18,9 @@ const server = 	http.createServer() // Servidor Arranca y emite eventos "Event- 
 //FUNCIONES DEFINIDAS 
 
 function onRequest(req, res){
-	let fileName = path.join(__dirname,'public','index.html')
-	fs.readFile(fileName, function(err , file){
+	let index = path.join(__dirname,'public','index.html')
+	
+	fs.readFile(index, function(err , file){
 		if (err) {
 			return res.end(err.message )
 		};
