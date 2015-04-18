@@ -23,6 +23,7 @@ function onRequest(req, res){
 		if (err) {
 			return res.end(err.message )
 		};
+		res.setHeader('Content-type', 'text/html')
 		res.end(file)
 	} )
 }
