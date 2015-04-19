@@ -1,0 +1,17 @@
+06 Refactor: Utilizar Streams en 'fs'
+
+En este paso utilizaremos Streams, uno de los conceptos mas
+poderosos de io/node.js para leer archivos.
+
+En el paso anterior "fs" carga todo el archivo en el buffer y 
+cuando éste termina se lo pasa al response, en cambio con "streams",
+el archivo a medida que se va leyendo se lo va pasando al response, 
+y el performance de la aplicacion aumenta considerablemente cuando se 
+usan archivos muy pesados.
+
+Por ultimo utilizamos un event-emmiter para enviar un mensaje de error
+en el "evento" de que ocurra un problema leyendo el archivo por streams.
+readStream.on('error', function(error){.....})'
+
+A medida que vamos avanzando seguimos utilizando callbacks, 
+event-emmiter y streams para potenciar el desarrollo asincrono con io/node.js 

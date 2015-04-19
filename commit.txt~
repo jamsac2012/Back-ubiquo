@@ -1,0 +1,6 @@
+05 Cambio de variable:
+
+Se decide cambiar el nombre de la variable "fileName" por "index",
+debido a que es mas facil de comprender y si en un futuro se decide
+agregar mas rutas es mas facil identificar las rutas segun el archivo que abren. 
+

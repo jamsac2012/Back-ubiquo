@@ -19,14 +19,17 @@ const server = 	http.createServer() // Servidor Arranca y emite eventos "Event- 
 
 function onRequest(req, res){
 	let index = path.join(__dirname,'public','index.html')
+	let readStream = fs.createReadStream(index)
+
+	res.setHeader('Content-type', 'text/html')
+	readStream.pipe(res)
+
+	readStream.on('error', function(err){
+		res.setHeader('Content-type', 'text/plain')
+		res.end(err.message )
+	})
+
 	
-	fs.readFile(index, function(err , file){
-		if (err) {
-			return res.end(err.message )
-		};
-		res.setHeader('Content-type', 'text/html')
-		res.end(file)
-	} )
 }
 
 function onListen(){
