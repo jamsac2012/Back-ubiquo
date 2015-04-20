@@ -17,21 +17,21 @@ const server = 	http.createServer() // Servidor Arranca y emite eventos "Event- 
 
 //FUNCIONES DEFINIDAS 
 
-function onRequest(req, res){
-	let index = path.join(__dirname,'public','index.html')
-	let readStream = fs.createReadStream(index)
+function onRequest(req, res){ 
+	let index = path.join(__dirname,'public','index.html') // Se configura el Path para localizar el archivo en el request.
+	let readStream = fs.createReadStream(index) // Stream para cargar el archivo index.html del path.
 
-	res.setHeader('Content-type', 'text/html')
-	readStream.pipe(res)
+	res.setHeader('Content-type', 'text/html') // Se le notifica al browser que recibira un archivo en formato html.
+	readStream.pipe(res) // mediante el metodo pipe se entuba la carga del stream en el response.
 
-	readStream.on('error', function(err){
-		res.setHeader('Content-type', 'text/plain')
+	readStream.on('error', function(err){  // Event-Emmit que escucha el evento error para notificar que tipo de error sucedio
+		res.setHeader('Content-type', 'text/plain') 
 		res.end(err.message )
-	})
+	}) 
 
 	
 }
 
-function onListen(){
+function onListen(){  // Funcion para escuchar los request HTTP en el puerto 8080 
 	console.log('Servidor activo en el puerto: ' + port)
 }
