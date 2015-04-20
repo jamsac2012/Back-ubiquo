@@ -33,5 +33,5 @@ function onRequest(req, res){
 }
 
 function onListen(){  // Funcion para escuchar los request HTTP en el puerto 8080 
-	console.log('Servidor activo en el puerto: ' + port)
+	console.log(`Servidor activo en el puerto: ${port}`)
 }
