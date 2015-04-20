@@ -1,17 +1,9 @@
-06 Refactor: Utilizar Streams en 'fs'
+09 Refactor: Utilizar el modulo "st" para manejo de archivos estaticos.
 
-En este paso utilizaremos Streams, uno de los conceptos mas
-poderosos de io/node.js para leer archivos.
-
-En el paso anterior "fs" carga todo el archivo en el buffer y 
-cuando éste termina se lo pasa al response, en cambio con "streams",
-el archivo a medida que se va leyendo se lo va pasando al response, 
-y el performance de la aplicacion aumenta considerablemente cuando se 
-usan archivos muy pesados.
-
-Por ultimo utilizamos un event-emmiter para enviar un mensaje de error
-en el "evento" de que ocurra un problema leyendo el archivo por streams.
-readStream.on('error', function(error){.....})'
-
-A medida que vamos avanzando seguimos utilizando callbacks, 
-event-emmiter y streams para potenciar el desarrollo asincrono con io/node.js 
+En esta etapa creamos un modulo llamado "router", en donde manejamos todo
+lo relacionado con las rutas y los archivos estaticos de nuestra aplicacion.
+Inicialmente utilizamos "st" que nos permite montar una carpeta estatica en 
+el proyecto web y definir un archivo como index para ser responido, aparte,
+ahora todos los archivos que se encuentren dentro de la carpeta 'public' 
+estaran servidor para ser accedidos en el request o en caso de no coincidir 
+con nada del request, nos devolvera un 404 Not found.
