@@ -10,8 +10,18 @@ const mount = st({  // Constante que me carga la funcionalidad de st que requier
 })
 
 
+// RUTAS DEFINIDAS SEGUN EL METODO
 
-//FUNCIONES DEFINIDOAS
+router.post('/guardar', function(req, res){ // Ruta para guardar los RegisterId de los dispositivos
+
+})
+
+router.get('/validar', function(req, res){ // Ruta para validar que las credenciales existen en Ubiquo.
+
+})
+
+
+//FUNCIONES DE RESPUESTA
 
 function onRequest(req, res){ 
 	mount(req,res, function(err){  // Llamo al montaje de la ruta statica para saber si esta disponible en la respuesta y adhiero un callback por si es un error

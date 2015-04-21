@@ -1,3 +1,8 @@
-12 Refactor: Utilizar el modulo "course" para manejo de rutas dinamicas.
+13 Refactor: Creacion de rutas GET y POST 
 
-El modulo 'course' nos permite agregar mas rutas a la aplicacion y se la lleva muy bien con el modulo 'http'. De esta forma trabajamos muy livianos y con las mismas funcionalidades del framework 'Express'
+
+Se agrega el enrutamiento de los metodos necesarios para que la API cumpla
+su funcion de validar los usuarios y guardar los registerID.
+
+Se modifica el archivo gitignore.txt por .gitignore para que no suban 
+los modulos ni los logs que se originan en las ejecuciones.
