@@ -1,9 +1,3 @@
-09 Refactor: Utilizar el modulo "st" para manejo de archivos estaticos.
+12 Refactor: Utilizar el modulo "course" para manejo de rutas dinamicas.
 
-En esta etapa creamos un modulo llamado "router", en donde manejamos todo
-lo relacionado con las rutas y los archivos estaticos de nuestra aplicacion.
-Inicialmente utilizamos "st" que nos permite montar una carpeta estatica en 
-el proyecto web y definir un archivo como index para ser responido, aparte,
-ahora todos los archivos que se encuentren dentro de la carpeta 'public' 
-estaran servidor para ser accedidos en el request o en caso de no coincidir 
-con nada del request, nos devolvera un 404 Not found.
+El modulo 'course' nos permite agregar mas rutas a la aplicacion y se la lleva muy bien con el modulo 'http'. De esta forma trabajamos muy livianos y con las mismas funcionalidades del framework 'Express'

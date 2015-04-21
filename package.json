@@ -9,6 +9,7 @@
   "author": "Adrian Ayala Castrillon <joseadrian15@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "course": "0.0.1",
     "st": "^0.5.3"
   }
 }

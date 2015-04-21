@@ -3,7 +3,7 @@
 const http 	= 	require('http') // Peticion del modulo interno HTTP
 const fs 	=	require('fs') // Modulo interno File System para cargar archivos en las rutas
 const path 	=	require('path') // Modulo interno para el manejo de las rutas absolutas... contiene un variable __dirname que indica la carpeta actual de la aplicacion y funciona en todos los modulos
-const router =	require('./router')
+const router =	require('./router')  // Se invoca el metodo o funcion onRequest que se encuentra modularizado en un archivo con la logica de enrutamiento.
 const port 	= 	process.env.PORT || 8080 // Variable de Entorno para definir el puerto donde escucha el servidor
 const server = 	http.createServer() // Servidor Arranca y emite eventos "Event- Emmiter"
 
