@@ -1,8 +1,5 @@
-13 Refactor: Creacion de rutas GET y POST 
+14 Creación de BD NoSQL con RethinkDB para la persistencia:
 
-
-Se agrega el enrutamiento de los metodos necesarios para que la API cumpla
-su funcion de validar los usuarios y guardar los registerID.
-
-Se modifica el archivo gitignore.txt por .gitignore para que no suban 
-los modulos ni los logs que se originan en las ejecuciones.
+Se agrega el modulo de conexión con la BD en /model/config.js.
+Este módulo será utilizado desde en el archivo server.js para 
+persistir los datos en el metodo POST de la API.
