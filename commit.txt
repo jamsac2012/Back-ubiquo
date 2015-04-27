@@ -1,5 +1,5 @@
-14 Creación de BD NoSQL con RethinkDB para la persistencia:
+15 Refactor: Creacion de las funciones get/listar y post/guardar
 
-Se agrega el modulo de conexión con la BD en /model/config.js.
-Este módulo será utilizado desde en el archivo server.js para 
-persistir los datos en el metodo POST de la API.
+Se crean las rutas get y post como prueba de conexion con la BD ReQL.
+Con este refactor se pretende tener claro como funciona de forma basica
+la conexion con RethinkDB desde IO.js
