@@ -7,10 +7,8 @@
 const st 	= 	require('st') // Invocamos el modulo 'st'
 const path 	= 	require('path') // Invocamos el modulo 'path'
 const course = 	require('course') // Invocamos modulo 'course'
-const jsonBody = require('body/json') // Innvocamos modulo 'body'
-const r 	=	require('rethinkdb') // Peticion del modulo 'rethink'
-const config = 	require('../model/config.json'); // Peticion de modulo externo de configuracion para conexion con la BD ReQL.
-
+const gcmSend = require('../gcm') // Invocamos modulo 'node-gcm' con la funcionalidad para enviar el mensaje a GCM
+const api =		require('../api-rest') //Invocamos las funciones para los metodos de la API.
 
 
 // --------------------------------------------------------------------------------------------
@@ -44,63 +42,8 @@ function onRequest(req, res){
 }
 
 
-// ------------------------------------------------------------------------------
-//		Definicion de Funciones para el manejo de los datos en la API-REST
-// ------------------------------------------------------------------------------
-
-function listar(req, res) { // Lista en formato JSON la lista de usuarios en la BD ReQL
-		r.connect(config.rethinkdb, function(err, conn){ // Realiza la conexion con la BD y devuelve la conn en el callback
-			if (err) throw err  // Si la conexion falla devuelve el error 
-
-			r.table('usuarios').run(conn, function(err, cursor) {  // Consulta a la DB (Listar todos los documentos en la tabla 'usuarios')
-			    if (err) throw err; // Devuelve err si falla la conn
-			    cursor.toArray(function(err, result) {  // Cursor con un array para mostrar los registros
-			        if (err) throw err; // Devuelve err si falla la creacion del array en el cursor
-			        console.log(JSON.stringify(result, null, 2));  //Debug 
-			        res.setHeader("content-type", "application/json")  // Prepara el browser para recibir el formato JSON
-	    			res.end(JSON.stringify(result, null, 2)) // Devuelve el resultado a la funcion con los registros listados
-			    });
-			});
-		})
-}
-
-function guardar(req, res){  // Funcion para guardar datos en la BD ReQL
-	jsonBody(req, res, { limit: 3 * 1024 * 1024 }, function (err, body) {  // Abstraccion del request en formato JSON con el modulo 'body'.
-    if (err) return fail(err, res) // Devuelve err con el helper 'fail'
-    console.log(body) // Debug
-
-	r.connect(config.rethinkdb, function(err, conn){
-		if (err) throw err
-		r.table('usuarios').insert({ // Insercion de los datos recojidos en el body en la DB
-			usuario:body.usuario,
-			pass:body.pass,
-			regId:body.regId
-		}).run(conn, function(err, result) {
-			    if (err) throw err
-			    console.log(JSON.stringify(result, null, 2)) // Debug
-			})
-	})
-	res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify({ ok: true }))
-  	})
-}
-
-function borrar(req,res){
-	r.connect(config.rethinkdb, function(err, conn){
-		if (err) throw err
-
-		r.table('usuarios').delete().run(conn, function(err, result){
-			if (err) throw err
-			console.log(JSON.stringify(result, null, 2))
-			res.setHeader('Content-Type','application/json')
-			res.end(JSON.stringify({ ok: true }))
-		})
-	})
-}
-
-
 // ------------------------------------------
-//		Funcion para manejor error 500 
+//		Helper para manejar error 500 
 // ------------------------------------------
 
 
@@ -118,9 +61,10 @@ function fail (err, res){  // Funcion para definir o encausar un error cuando no
 
 const router = course()
 
-router.get('/0001', listar)  // Ruta para encontrar el metodo de Listar todos los datos de la BD.
-router.put('/0002', guardar) // Ruta para encontrar el metodo de guardar datos en la BD.
-router.post('/0003', borrar) // Ruta para encontrar el metodo de borrar datos en la BD.
+router.get('/0001', api.listar)  // Ruta para encontrar el metodo de Listar todos los datos de la BD.
+router.put('/0002', api.guardar) // Ruta para encontrar el metodo de guardar datos en la BD.
+router.post('/0003', api.borrar) // Ruta para encontrar el metodo de borrar datos en la BD.
+router.post('0004', gcmSend)
 
 module.exports = onRequest   //  Exporta la funcion onRequest para ser llamada a nivel global en la aplicacion.
 
