@@ -1,5 +1,6 @@
-15 Refactor: Creacion de las funciones get/listar y post/guardar
+17 Agregamos modulo 'node-gcm' 
 
-Se crean las rutas get y post como prueba de conexion con la BD ReQL.
-Con este refactor se pretende tener claro como funciona de forma basica
-la conexion con RethinkDB desde IO.js
+
+Creamos un modulo gcm para manejar los envios de mensajes 
+a los dispositivos con sus respectivos Registration ID 
+a traves del GCM de google para Android.
