@@ -1,13 +1,20 @@
-const st = require('st') // Invocamos el modulo 'st'
-const path = require('path') // Invocamos el modulo 'path'
-const course = require ('course') //Invocamos modulo 'course'
+'use strict'
+
+// ------------------------------------------
+//		Importamos las dependencias
+// ------------------------------------------
+
+const st 	= 	require('st') // Invocamos el modulo 'st'
+const path 	= 	require('path') // Invocamos el modulo 'path'
+const course = 	require('course') // Invocamos modulo 'course'
+const jsonBody = require('body/json') // Innvocamos modulo 'body'
 const r 	=	require('rethinkdb') // Peticion del modulo 'rethink'
 const config = 	require('../model/config.json'); // Peticion de modulo externo de configuracion para conexion con la BD ReQL.
 
 
 
 // --------------------------------------------------------------------------------------------
-//		Definicion de ruta estatica para encontrar todos los archivos de la carpeta ./public
+//		Montaje de la ruta estatica para encontrar todos los archivos de la carpeta ./public
 // --------------------------------------------------------------------------------------------
 
 const mount = st({  // Constante que me carga la funcionalidad de st que requiere dos propiedades
@@ -18,7 +25,8 @@ const mount = st({  // Constante que me carga la funcionalidad de st que requier
 
 
 // ----------------------------------------------------------------------------------------
-//		Funcion que será exportada en el modulo - Responde a la ruta estatica ./public 
+//		Funcion que será exportada - Responde inicialmente a la ruta estatica 'mount',  
+//		de no localizar el req, buscara en el router, por ultimo enviara un error 404.
 // ----------------------------------------------------------------------------------------
 
 function onRequest(req, res){ 
@@ -40,38 +48,55 @@ function onRequest(req, res){
 //		Definicion de Funciones para el manejo de los datos en la API-REST
 // ------------------------------------------------------------------------------
 
-function listar(req, res) {
-	console.log('_____________________');
-	console.log('API - ubiquo/usuarios');
-	
+function listar(req, res) { // Lista en formato JSON la lista de usuarios en la BD ReQL
+		r.connect(config.rethinkdb, function(err, conn){ // Realiza la conexion con la BD y devuelve la conn en el callback
+			if (err) throw err  // Si la conexion falla devuelve el error 
+
+			r.table('usuarios').run(conn, function(err, cursor) {  // Consulta a la DB (Listar todos los documentos en la tabla 'usuarios')
+			    if (err) throw err; // Devuelve err si falla la conn
+			    cursor.toArray(function(err, result) {  // Cursor con un array para mostrar los registros
+			        if (err) throw err; // Devuelve err si falla la creacion del array en el cursor
+			        console.log(JSON.stringify(result, null, 2));  //Debug 
+			        res.setHeader("content-type", "application/json")  // Prepara el browser para recibir el formato JSON
+	    			res.end(JSON.stringify(result, null, 2)) // Devuelve el resultado a la funcion con los registros listados
+			    });
+			});
+		})
+}
+
+function guardar(req, res){  // Funcion para guardar datos en la BD ReQL
+	jsonBody(req, res, { limit: 3 * 1024 * 1024 }, function (err, body) {  // Abstraccion del request en formato JSON con el modulo 'body'.
+    if (err) return fail(err, res) // Devuelve err con el helper 'fail'
+    console.log(body) // Debug
+
+	r.connect(config.rethinkdb, function(err, conn){
+		if (err) throw err
+		r.table('usuarios').insert({ // Insercion de los datos recojidos en el body en la DB
+			usuario:body.usuario,
+			pass:body.pass,
+			regId:body.regId
+		}).run(conn, function(err, result) {
+			    if (err) throw err
+			    console.log(JSON.stringify(result, null, 2)) // Debug
+			})
+	})
+	res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify({ ok: true }))
+  	})
+}
+
+function borrar(req,res){
 	r.connect(config.rethinkdb, function(err, conn){
 		if (err) throw err
 
-		r.table('usuarios').run(conn, function(err, cursor) {
-		    if (err) throw err;
-		    cursor.toArray(function(err, result) {
-		        if (err) throw err;
-		        console.log(JSON.stringify(result, null, 2));
-		    });
-		});
+		r.table('usuarios').delete().run(conn, function(err, result){
+			if (err) throw err
+			console.log(JSON.stringify(result, null, 2))
+			res.setHeader('Content-Type','application/json')
+			res.end(JSON.stringify({ ok: true }))
+		})
 	})
 }
-
-function guardar(req, res){
-	r.connect(config.rethinkdb, function(err, conn){
-		if (err) throw err
-
-		r.table('usuarios').insert({
-			usuario:'Amparo',
-			pass:'1234',
-			regId:'qwerdssdfgkjhg'
-			}).run(conn, function(err, result) {
-			    if (err) throw err;
-			    console.log(JSON.stringify(result, null, 2));
-		});
-	})
-}
-
 
 
 // ------------------------------------------
@@ -94,7 +119,8 @@ function fail (err, res){  // Funcion para definir o encausar un error cuando no
 const router = course()
 
 router.get('/mostrar', listar)  // Ruta para encontrar el metodo de Listar todos los datos de la BD.
-router.post('/guardar', guardar) // Ruta para encontrar el metodo de guardar datos en la BD.
+router.put('/guardar', guardar) // Ruta para encontrar el metodo de guardar datos en la BD.
+router.post('/eliminar', borrar) // Ruta para encontrar el metodo de borrar datos en la BD.
 
 module.exports = onRequest   //  Exporta la funcion onRequest para ser llamada a nivel global en la aplicacion.
 

@@ -9,6 +9,7 @@
   "author": "Adrian Ayala Castrillon <joseadrian15@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "body": "^5.0.0",
     "course": "0.0.1",
     "rethinkdb": "^2.0.0",
     "st": "^0.5.3"

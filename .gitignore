@@ -1,3 +1,5 @@
 node_modules/
 rethinkdb_data/
+GoogleCredenciales.json
+commit.txt
 *.log
