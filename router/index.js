@@ -118,9 +118,9 @@ function fail (err, res){  // Funcion para definir o encausar un error cuando no
 
 const router = course()
 
-router.get('/mostrar', listar)  // Ruta para encontrar el metodo de Listar todos los datos de la BD.
-router.put('/guardar', guardar) // Ruta para encontrar el metodo de guardar datos en la BD.
-router.post('/eliminar', borrar) // Ruta para encontrar el metodo de borrar datos en la BD.
+router.get('/0001', listar)  // Ruta para encontrar el metodo de Listar todos los datos de la BD.
+router.put('/0002', guardar) // Ruta para encontrar el metodo de guardar datos en la BD.
+router.post('/0003', borrar) // Ruta para encontrar el metodo de borrar datos en la BD.
 
 module.exports = onRequest   //  Exporta la funcion onRequest para ser llamada a nivel global en la aplicacion.
 
