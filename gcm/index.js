@@ -11,12 +11,12 @@ const gcm = require('node-gcm')
 // -----------------------------------------------------------------
 
 const message = new gcm.Message({
-    collapseKey: 'demo',
+    //collapseKey: 'Ubiquo',
     delayWhileIdle: true,
-    timeToLive: 3,
+    timeToLive: 0,
     data: {
-        titulo: 'Funciona!!!!!',
-        mensaje: 'Mi primera notificacion Push'
+        titulo: 'Comunicado!!',
+        mensaje: 'Cuerpo del Mensaje con BigText Style'
     }
 })
 
@@ -25,8 +25,8 @@ const message = new gcm.Message({
 // --------------------------------------------------------------------------
 
 const registrationIds = []
-registrationIds.push('regId1')
-registrationIds.push('regId2')
+registrationIds.push("APA91bHFx5dKQGoUjji68_h-OhHnoJ7_W-c69Cv36sSsbKj1FPb4o5xdnIuO9S-SIwXhX0jBPwkqCdudbm1iRd0DiAE2iorR04rkQE6g1mvejQ6JXsIFNE790CqbKW-jfhSsqWf78tOG")
+registrationIds.push("APA91bFcBz1ArJkDLt0_QwKlH36vukhER0WIoMwKMYh9kwGSGRaRj3_gW621XhGj3hAD013A-hDzbYCC88or63Q4heKNglgSKn9IYGdxjuR_UHqHtftj9jqY90PEq3RXrCDYH4T5qJeI")
 
 // ----------------------------------------------
 //		Configurar el sender con el API Key
@@ -39,7 +39,7 @@ const sender = new gcm.Sender('AIzaSyA6oMC1ml6yA9ZVlu9OCY1_KeTwGuIpUs8')
 // --------------------------------------------------------------------------
 
 function enviar(req, res){
-    sender.send(message, registrationIds, 4, function (err, result) {
+    sender.sendNoRetry(message, registrationIds, function (err, result) {
         if(err) res.end(err.message)
         else console.log(result) 
             console.log(message)
