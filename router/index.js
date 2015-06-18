@@ -63,8 +63,9 @@ const router = course()
 
 router.get('/0001', api.listar)  // Ruta para encontrar el metodo de Listar todos los datos de la BD.
 router.post('/0002', api.guardar) // Ruta para encontrar el metodo de guardar datos en la BD.
-router.post('/0003', api.borrar) // Ruta para encontrar el metodo de borrar datos en la BD.
-router.get('/0004', gcmSend)
+router.get('/0003', api.borrar) // Ruta para encontrar el metodo de borrar datos en la BD.
+router.get('/0004', gcmSend) // Ruta para enviar mensajes a GCM de Google.
+router.post('/0005', api.login) // Ruta para verificar la existencia de un login
 
 module.exports = onRequest   //  Exporta la funcion onRequest para ser llamada a nivel global en la aplicacion.
 

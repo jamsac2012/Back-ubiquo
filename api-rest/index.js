@@ -45,6 +45,23 @@ exports.guardar = function(req, res){  // Funcion para guardar datos en la BD Re
   	})
 }
 
+exports.login = function(req, res){  // Funcion para buscar usuario y pass en la BD ReQL
+	jsonBody(req, res, { limit: 3 * 1024 * 1024 }, function (err, body) {  // Abstraccion del request en formato JSON con el modulo 'body'.
+    if (err) return fail(err, res) // Devuelve err con el helper 'fail'
+    console.log(body) // Debug
+
+	r.connect(config.rethinkdb, function(err, conn){
+		if (err) throw err
+		r.table('usuarios').filter(r.row("usuario").eq(body.usuario).and(r.row("pass").eq(body.pass))).run(conn, function(err, result) {
+			    if (err) throw err
+			    console.log(JSON.stringify(result, null, 2)) // Debug
+			})
+	})
+	res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify({ ok: true }))
+  	})
+}
+
 exports.borrar = function(req,res){
 	r.connect(config.rethinkdb, function(err, conn){
 		if (err) throw err

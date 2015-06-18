@@ -11,12 +11,17 @@ const gcm = require('node-gcm')
 // -----------------------------------------------------------------
 
 const message = new gcm.Message({
-    //collapseKey: 'Ubiquo',
+    collapseKey: 'Ubiquo',
     delayWhileIdle: true,
     timeToLive: 0,
     data: {
-        titulo: 'Comunicado!!',
-        mensaje: 'Cuerpo del Mensaje con BigText Style'
+        titulo: 'Consultorio Habilitado',
+        mensaje: 'Pasar al Pablo tobon a reunión jueves 3:00 Pm con el Doctor Arbelaez.',
+        sender: 'Alejandra Caicedo',
+        url: 'http://applica.la',
+        date: '13 de Jun',
+        msgId: '0041',
+        msgState: '1'
     }
 })
 
@@ -25,8 +30,10 @@ const message = new gcm.Message({
 // --------------------------------------------------------------------------
 
 const registrationIds = []
-registrationIds.push("APA91bHFx5dKQGoUjji68_h-OhHnoJ7_W-c69Cv36sSsbKj1FPb4o5xdnIuO9S-SIwXhX0jBPwkqCdudbm1iRd0DiAE2iorR04rkQE6g1mvejQ6JXsIFNE790CqbKW-jfhSsqWf78tOG")
-registrationIds.push("APA91bFcBz1ArJkDLt0_QwKlH36vukhER0WIoMwKMYh9kwGSGRaRj3_gW621XhGj3hAD013A-hDzbYCC88or63Q4heKNglgSKn9IYGdxjuR_UHqHtftj9jqY90PEq3RXrCDYH4T5qJeI")
+registrationIds.push("APA91bHU7NZ2_chQZWfqNgGlg89fvXfWzq0DtvfwOOgcOnhF5AilyfZ1MV7iY4OanrtOzxQkzLAZqV_Yp16NGKGdMTFB4QjmKZJn7ulwBB63LK5nB-JZKUqK7s7PHWQIY3_jEMTj3RV9")
+registrationIds.push("APA91bEfwKqRC-Qm99No0QWpOHFgWyMNBVDq3vx5Sc0BJ70RxjlkMS9UrvjzG0o3JJ7TeBZN4RjGMWrWCW96YG4by2yCTw9SiHMKBkj47O7hmHv54U438XPB8DT7t6BiT5qzAAvWecoU")
+registrationIds.push("APA91bFkmmFznruqWEVhJ3w8QthE0YSWWQuWTJ_Ryn9495fmgMD6pNZkPmuEaD_vUVpEMp0VyvwhruHCgIq0RPFSobMGn6YNDKu3ByBZhyZJT7mS92-TtSVNH_bpRLULBnFUS3b9eHH6")
+
 
 // ----------------------------------------------
 //		Configurar el sender con el API Key
